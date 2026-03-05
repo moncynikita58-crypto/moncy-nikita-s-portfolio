@@ -50,11 +50,11 @@ const blogPosts = [
 ];
 
 const BlogSection = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, slidesToScroll: 1, align: "start" },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const slideCount = 2;
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -71,8 +71,6 @@ const BlogSection = () => {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  const slides = [blogPosts.slice(0, 3), blogPosts.slice(3, 6)];
-
   return (
     <section className="py-12 md:py-16">
       <div className="container mx-auto max-w-6xl px-6">
@@ -83,32 +81,28 @@ const BlogSection = () => {
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {slides.map((group, i) => (
-                <div key={i} className="flex-[0_0_100%] min-w-0">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-1">
-                    {group.map((post) => (
-                      <Link to={`/blog/${post.slug}`} key={post.slug} className="group">
-                        <article>
-                          <div className="overflow-hidden rounded mb-4">
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                          <h3 className="text-base font-heading font-bold text-primary underline group-hover:text-accent transition-colors mb-2">
-                            {post.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {post.excerpt}{" "}
-                            <span className="text-primary underline group-hover:text-accent transition-colors">
-                              Read more
-                            </span>
-                          </p>
-                        </article>
-                      </Link>
-                    ))}
-                  </div>
+              {blogPosts.map((post) => (
+                <div key={post.slug} className="flex-[0_0_33.333%] min-w-0 px-3">
+                  <Link to={`/blog/${post.slug}`} className="group">
+                    <article>
+                      <div className="overflow-hidden rounded mb-4">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <h3 className="text-base font-heading font-bold text-primary underline group-hover:text-accent transition-colors mb-2">
+                        {post.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {post.excerpt}{" "}
+                        <span className="text-primary underline group-hover:text-accent transition-colors">
+                          Read more
+                        </span>
+                      </p>
+                    </article>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -133,7 +127,7 @@ const BlogSection = () => {
 
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-8">
-          {Array.from({ length: slideCount }).map((_, i) => (
+          {blogPosts.map((_, i) => (
             <button
               key={i}
               onClick={() => emblaApi?.scrollTo(i)}

@@ -1,17 +1,17 @@
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import aboutResearch from "@/assets/about-research.jpg";
-import aboutFieldwork from "@/assets/about-fieldwork.jpg";
-import aboutOffice from "@/assets/about-office.jpg";
-import aboutTraining from "@/assets/about-training.jpg";
-import aboutNairobi from "@/assets/about-nairobi.jpg";
+import aboutPanel1 from "@/assets/about-panel1.jpg";
+import aboutPanel2 from "@/assets/about-panel2.jpg";
+import aboutPanel3 from "@/assets/about-panel3.jpg";
+import aboutPanel4 from "@/assets/about-panel4.jpg";
+import aboutPanel5 from "@/assets/about-panel5.jpg";
 
 const carouselImages = [
-  { src: aboutResearch, alt: "Market research data analysis for Africa" },
-  { src: aboutFieldwork, alt: "Field research team in Africa" },
-  { src: aboutOffice, alt: "Nairobi office meeting" },
-  { src: aboutTraining, alt: "Research methodology training" },
-  { src: aboutNairobi, alt: "Nairobi city skyline" },
+  { src: aboutPanel1, alt: "Infinite Insight field research" },
+  { src: aboutPanel2, alt: "Market research in Africa" },
+  { src: aboutPanel3, alt: "Research team at work" },
+  { src: aboutPanel4, alt: "Data collection fieldwork" },
+  { src: aboutPanel5, alt: "Nairobi research operations" },
 ];
 
 const AboutSection = () => {

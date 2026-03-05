@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
-import logo from "@/assets/logo.png";
+
 import membershipLogos from "@/assets/membership-logos.png";
 
 interface DropdownItem {
@@ -88,21 +88,14 @@ const SiteHeader = () => {
   return (
     <header className="w-full">
       {/* Hero Banner */}
-      <div className="relative w-full h-24 md:h-28 overflow-hidden">
-        <img
-          src={heroBanner}
-          alt="We Know Africa - Infinite Insight"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center px-6 md:px-12">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src={logo}
-              alt="Infinite Insight Logo"
-              className="w-16 h-16 md:w-20 md:h-20 object-contain"
-            />
-          </Link>
-        </div>
+      <div className="w-full overflow-hidden">
+        <Link to="/">
+          <img
+            src={heroBanner}
+            alt="We Know Africa - Infinite Insight"
+            className="w-full h-auto object-cover"
+          />
+        </Link>
       </div>
 
       {/* Navigation */}
