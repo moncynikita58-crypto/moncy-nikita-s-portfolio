@@ -65,7 +65,7 @@ const SiteFooter = () => {
             <ul className="space-y-2">
               {newsLinks.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.href} className="text-sm text-primary-foreground/80 hover:text-accent underline underline-offset-2 transition-colors">
+                  <Link to={link.href} className="text-sm text-primary-foreground/80 hover:text-primary underline underline-offset-2 transition-colors">
                     {link.label}
                   </Link>
                 </li>
