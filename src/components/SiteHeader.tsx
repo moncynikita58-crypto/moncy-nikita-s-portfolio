@@ -197,6 +197,17 @@ const SiteHeader = () => {
           </div>
         )}
       </nav>
+
+      {/* Membership Logos */}
+      <div className="w-full bg-background py-4 border-b border-border">
+        <div className="container mx-auto px-6">
+          <img
+            src={membershipLogos}
+            alt="ESOMAR, MSRA, PAMRO, AMRA, NiMRA, SAMRA, WAPOR, GBA membership logos"
+            className="w-full max-h-16 object-contain"
+          />
+        </div>
+      </div>
     </header>
   );
 };
