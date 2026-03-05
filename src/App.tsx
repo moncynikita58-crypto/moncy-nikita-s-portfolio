@@ -35,6 +35,9 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/social" element={<SocialPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/careers/:id" element={<CareerApplyPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -48,7 +48,7 @@ const navItems: NavItem[] = [
   {
     label: "Contacts", href: "/contacts", dropdown: [
       { label: "Contact Us", href: "/contacts" },
-      { label: "Careers", href: "/contacts" },
+      { label: "Careers", href: "/careers" },
     ]
   },
 ];
