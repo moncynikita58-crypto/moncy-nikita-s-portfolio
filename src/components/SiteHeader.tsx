@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
+import logo from "@/assets/logo.png";
+import membershipLogos from "@/assets/membership-logos.png";
 
 interface DropdownItem {
   label: string;
