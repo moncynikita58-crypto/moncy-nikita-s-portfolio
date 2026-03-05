@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Users, Handshake, Building2, Settings, Newspaper, FileText } from "lucide-react";
+import { Briefcase, Users, UsersRound, Mic, Newspaper, TrendingUp } from "lucide-react";
 
 const helpItems = [
-  { icon: Users, label: "About Us", href: "/about" },
-  { icon: Handshake, label: "Partners", href: "/partners" },
-  { icon: Building2, label: "Clients", href: "/clients" },
-  { icon: Settings, label: "Services", href: "/services" },
+  { icon: Briefcase, label: "About Us", href: "/about" },
+  { icon: Users, label: "Partners", href: "/partners" },
+  { icon: UsersRound, label: "Clients", href: "/clients" },
+  { icon: Mic, label: "Services", href: "/services" },
   { icon: Newspaper, label: "News", href: "/blog" },
-  { icon: FileText, label: "Research Reports", href: "/blog" },
+  { icon: TrendingUp, label: "Research Reports", href: "/blog" },
 ];
 
 const HelpSection = () => {
@@ -18,15 +18,15 @@ const HelpSection = () => {
           How can we help you?
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-12">
           {helpItems.map((item) => (
             <Link
               key={item.label}
               to={item.href}
-              className="flex flex-col items-center gap-3 p-6 bg-background rounded border border-border hover:border-primary hover:shadow-md transition-all group"
+              className="flex flex-col items-center gap-4 group"
             >
-              <item.icon className="w-10 h-10 text-primary group-hover:text-accent transition-colors" />
-              <span className="text-sm font-semibold font-body text-foreground group-hover:text-primary transition-colors">
+              <item.icon className="w-16 h-16 text-primary" strokeWidth={1.5} />
+              <span className="text-sm font-semibold font-body text-primary underline underline-offset-4 group-hover:text-accent transition-colors">
                 {item.label}
               </span>
             </Link>

@@ -1,21 +1,87 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
 
-const navItems = [
+interface DropdownItem {
+  label: string;
+  href: string;
+}
+
+interface NavItem {
+  label: string;
+  href: string;
+  dropdown?: DropdownItem[];
+}
+
+const navItems: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/about", hasDropdown: true },
-  { label: "Services", href: "/services", hasDropdown: true },
+  {
+    label: "About Us", href: "/about", dropdown: [
+      { label: "Our Expertise", href: "/about" },
+      { label: "Directors", href: "/about" },
+      { label: "Senior Management", href: "/about" },
+      { label: "Coverage Map", href: "/about" },
+      { label: "Data Privacy", href: "/about" },
+      { label: "GDPR Compliance", href: "/about" },
+    ]
+  },
+  {
+    label: "Services", href: "/services", dropdown: [
+      { label: "Quantitative Research", href: "/services" },
+      { label: "Qualitative Research", href: "/services" },
+      { label: "Data Analytics", href: "/services" },
+      { label: "Training", href: "/services" },
+    ]
+  },
   { label: "Partners", href: "/partners" },
   { label: "Clients", href: "/clients" },
-  { label: "Blog", href: "/blog", hasDropdown: true },
+  {
+    label: "Blog", href: "/blog", dropdown: [
+      { label: "News", href: "/blog" },
+      { label: "Reports", href: "/blog" },
+    ]
+  },
   { label: "Social", href: "/social" },
-  { label: "Contacts", href: "/contacts", hasDropdown: true },
+  {
+    label: "Contacts", href: "/contacts", dropdown: [
+      { label: "Contact Us", href: "/contacts" },
+      { label: "Careers", href: "/contacts" },
+    ]
+  },
 ];
+
+const DropdownMenu = ({ items, onClose }: { items: DropdownItem[]; onClose: () => void }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [onClose]);
+
+  return (
+    <div ref={ref} className="absolute top-full left-0 mt-0 bg-background border border-border shadow-lg rounded-sm min-w-[200px] z-50 py-1">
+      {items.map((item) => (
+        <Link
+          key={item.label}
+          to={item.href}
+          onClick={onClose}
+          className="block px-4 py-2 text-sm text-foreground hover:bg-secondary underline underline-offset-2 transition-colors"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </div>
+  );
+};
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
 
   return (
     <header className="w-full">
@@ -53,14 +119,28 @@ const SiteHeader = () => {
           {/* Desktop nav */}
           <ul className="hidden lg:flex items-center gap-1 mx-auto">
             {navItems.map((item) => (
-              <li key={item.label}>
-                <Link
-                  to={item.href}
-                  className="flex items-center gap-1 px-4 py-2 text-sm font-body text-foreground hover:text-link-hover transition-colors"
-                >
-                  {item.label}
-                  {item.hasDropdown && <ChevronDown className="w-3 h-3" />}
-                </Link>
+              <li key={item.label} className="relative">
+                {item.dropdown ? (
+                  <>
+                    <button
+                      onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                      className="flex items-center gap-1 px-4 py-2 text-sm font-body text-foreground hover:text-link-hover underline underline-offset-4 transition-colors"
+                    >
+                      {item.label}
+                      <ChevronDown className="w-3 h-3" />
+                    </button>
+                    {openDropdown === item.label && (
+                      <DropdownMenu items={item.dropdown} onClose={() => setOpenDropdown(null)} />
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="flex items-center gap-1 px-4 py-2 text-sm font-body text-foreground hover:text-link-hover underline underline-offset-4 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
             <li>
@@ -85,14 +165,40 @@ const SiteHeader = () => {
             <ul className="flex flex-col py-2">
               {navItems.map((item) => (
                 <li key={item.label}>
-                  <Link
-                    to={item.href}
-                    className="flex items-center justify-between px-6 py-3 text-sm font-body text-foreground hover:text-link-hover"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {item.label}
-                    {item.hasDropdown && <ChevronDown className="w-3 h-3" />}
-                  </Link>
+                  {item.dropdown ? (
+                    <>
+                      <button
+                        onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                        className="flex items-center justify-between w-full px-6 py-3 text-sm font-body text-foreground hover:text-link-hover"
+                      >
+                        {item.label}
+                        <ChevronDown className={`w-3 h-3 transition-transform ${mobileExpanded === item.label ? "rotate-180" : ""}`} />
+                      </button>
+                      {mobileExpanded === item.label && (
+                        <ul className="bg-secondary">
+                          {item.dropdown.map((sub) => (
+                            <li key={sub.label}>
+                              <Link
+                                to={sub.href}
+                                onClick={() => setMobileOpen(false)}
+                                className="block px-10 py-2 text-sm text-foreground hover:text-link-hover"
+                              >
+                                {sub.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className="flex items-center justify-between px-6 py-3 text-sm font-body text-foreground hover:text-link-hover"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
