@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getJobById } from "@/lib/careersData";
+import { supabase } from "@/integrations/supabase/client";
 import { MapPin, Calendar, ArrowLeft, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const kenyanCounties = [
   "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa",
@@ -22,9 +24,10 @@ const countries = ["Kenya", "Uganda", "Tanzania", "Rwanda", "Ethiopia", "South A
 
 const CareerApplyPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const job = getJobById(id || "");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "", idNumber: "",
@@ -53,10 +56,13 @@ const CareerApplyPage = () => {
         <SiteHeader />
         <main className="py-16">
           <div className="container mx-auto max-w-2xl px-6 text-center">
-            <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+            <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
             <h1 className="text-2xl font-heading font-bold text-foreground mb-3">Application Submitted!</h1>
             <p className="text-muted-foreground mb-6">
-              Thank you for applying for <strong>{job.title}</strong>. We will review your application and get back to you.
+              Thank you for applying for <strong>{job.title}</strong>. We will review your application and get back to you via the email you provided.
+            </p>
+            <p className="text-sm text-muted-foreground mb-6">
+              If selected, you will receive an invitation email with further instructions for the interview/webinar.
             </p>
             <Link to="/careers" className="text-primary hover:underline font-semibold">← Back to Careers</Link>
           </div>
@@ -65,6 +71,36 @@ const CareerApplyPage = () => {
       </div>
     );
   }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      const { error } = await (supabase as any).from("applications").insert({
+        job_listing_id: id,
+        job_title: job.title,
+        first_name: form.firstName,
+        last_name: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        id_number: form.idNumber,
+        gender: form.gender || null,
+        date_of_birth: form.dateOfBirth || null,
+        country: form.country,
+        county: form.county || null,
+        constituency: form.constituency || null,
+        ward: form.ward || null,
+        education: form.education || null,
+        experience: form.experience || null,
+        cover_letter: form.coverLetter || null,
+      });
+      if (error) throw error;
+      setSubmitted(true);
+    } catch (err: any) {
+      toast({ title: "Submission Failed", description: err.message || "Please try again.", variant: "destructive" });
+    }
+    setSubmitting(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -95,10 +131,7 @@ const CareerApplyPage = () => {
 
           {/* Application Form */}
           <h2 className="text-xl font-heading font-bold text-foreground mb-6">Application Form</h2>
-          <form
-            className="space-y-6"
-            onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Personal Info */}
             <div className="bg-card border border-border rounded-lg p-6">
               <h3 className="text-base font-bold text-foreground mb-4">Personal Information</h3>
@@ -195,8 +228,8 @@ const CareerApplyPage = () => {
             </div>
 
             <div className="flex justify-end">
-              <Button type="submit" size="lg" className="px-10">
-                Submit Application
+              <Button type="submit" size="lg" className="px-10" disabled={submitting}>
+                {submitting ? "Submitting..." : "Submit Application"}
               </Button>
             </div>
           </form>
