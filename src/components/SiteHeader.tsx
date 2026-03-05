@@ -1,16 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
 
 const navItems = [
-  { label: "Home", href: "#" },
-  { label: "About Us", href: "#about", hasDropdown: true },
-  { label: "Services", href: "#services", hasDropdown: true },
-  { label: "Partners", href: "#partners" },
-  { label: "Clients", href: "#clients" },
-  { label: "Blog", href: "#blog", hasDropdown: true },
-  { label: "Social", href: "#social" },
-  { label: "Contacts", href: "#contacts", hasDropdown: true },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about", hasDropdown: true },
+  { label: "Services", href: "/services", hasDropdown: true },
+  { label: "Partners", href: "/partners" },
+  { label: "Clients", href: "/clients" },
+  { label: "Blog", href: "/blog", hasDropdown: true },
+  { label: "Social", href: "/social" },
+  { label: "Contacts", href: "/contacts", hasDropdown: true },
 ];
 
 const SiteHeader = () => {
@@ -26,7 +27,7 @@ const SiteHeader = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 flex items-center px-6 md:px-12">
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="relative w-16 h-16 md:w-20 md:h-20">
               <div className="absolute inset-0 rounded-full border-[3px] border-primary" />
               <div
@@ -42,7 +43,7 @@ const SiteHeader = () => {
                 <span className="text-accent">I</span>nsight
               </span>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 
@@ -53,13 +54,13 @@ const SiteHeader = () => {
           <ul className="hidden lg:flex items-center gap-1 mx-auto">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className="flex items-center gap-1 px-4 py-2 text-sm font-body text-foreground hover:text-link-hover transition-colors"
                 >
                   {item.label}
                   {item.hasDropdown && <ChevronDown className="w-3 h-3" />}
-                </a>
+                </Link>
               </li>
             ))}
             <li>
@@ -84,14 +85,14 @@ const SiteHeader = () => {
             <ul className="flex flex-col py-2">
               {navItems.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="flex items-center justify-between px-6 py-3 text-sm font-body text-foreground hover:text-link-hover"
                     onClick={() => setMobileOpen(false)}
                   >
                     {item.label}
                     {item.hasDropdown && <ChevronDown className="w-3 h-3" />}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
