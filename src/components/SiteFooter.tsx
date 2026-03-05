@@ -94,7 +94,7 @@ const SiteFooter = () => {
               {contactLinks.map((link) => (
                 <li key={link.label}>
                   {link.external ? (
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-foreground/80 hover:text-accent underline underline-offset-2 transition-colors">
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-foreground/80 hover:text-primary underline underline-offset-2 transition-colors">
                       {link.label}
                     </a>
                   ) : (
