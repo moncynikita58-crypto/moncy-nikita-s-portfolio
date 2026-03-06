@@ -13,37 +13,37 @@ import blogNimra from "@/assets/blog-nimra.jpg";
 const blogPosts = [
   {
     slug: "esomar-2026-conference-nairobi",
-    image: blogConference,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790158/ESOMAR-2026-Conference-in-Nairobi-Althea-McCourt_atnhxz.jpg",
     title: "Update from ESOMAR 2026 Conference in Nairobi",
     excerpt: "This message was sent by our MSRA Secretariat: 📌 Africa 2026 was a powerful moment for our industry — and …",
   },
   {
     slug: "yemi-oniyitan-nimra-fellow",
-    image: blogNimra,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790158/Yemi-with-Consumer-Ideas-staff-at-NiMRA2025-Conference_a8uaeq.jpg",
     title: "Yemi Oniyitan Named a NiMRA Fellow",
     excerpt: "It is with great pleasure that the Infinite Insight family reports about an amazing accomplishment from one of our original …",
   },
   {
     slug: "msra-ethics-webinar",
-    image: blogWebinar,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790157/online-participant-female_wv56pa.jpg",
     title: "Upcoming MSRA Ethics Webinar",
     excerpt: "This post is a reminder for all Infinite Insight staff as well as our field interviewers who are registered MSRA …",
   },
   {
     slug: "conducting-social-research-in-rwanda",
-    image: blogRwanda,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790158/Kigali-Rwandi-street-life_ucd97k.jpg",
     title: "Conducting Social Research in Rwanda",
     excerpt: "Rwanda is a beautiful country, known for its rolling hills. Its cities and rural family homesteads are well kept and …",
   },
   {
     slug: "quantitative-field-work-uganda",
-    image: blogUganda,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790158/Kampala-Uganda-city-image-via-PixaBay_bolpio.jpg",
     title: "Performing Quantitative Field Work in Uganda",
     excerpt: 'Greetings from Uganda — also known as the "Pearl of Africa". As one of the top destinations in the East …',
   },
   {
     slug: "data-analysis-training-whatsapp",
-    image: blogData,
+    image: "https://res.cloudinary.com/dh1oznegj/image/upload/v1772790157/data-analysis-experts_nwln28.jpg",
     title: "Data Analysis & Analytics Training via WhatsApp",
     excerpt: "This valuable training info was posted to our private group chat by Naftali, our Research Director (Quant) …",
   },
